@@ -4,11 +4,11 @@
    <!--
       LIS 2360:  Web Application Development
       Lesson 5:  JavaScript 2
-      Project Title: Income Tax Calculator 
+      Project Title: Income Tax Calculator
       Filename: taxCalculator.html
 
-      Author: 
-      Date:   
+      Author: Michael Hanna
+      Date:   September 30 2016
    -->
    <meta charset="utf-8" />
    <meta id="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,8 +34,8 @@
       <form class = "bs-example bs-example-form" role = "form">
          <fieldset id="taxableIncome">
             <legend>What is my tax bracket?</legend>
-            Find out which IRS tax bracket you are in. As a percentage of income, 
-            your tax rate is generally lower than the tax rate listed. 
+            Find out which IRS tax bracket you are in. As a percentage of income,
+            your tax rate is generally lower than the tax rate listed.
             Use this calculator to estimate your actual tax rate and tax amount.
             <br><br>
 
@@ -60,7 +60,7 @@
         *
         *  Explanation:  The onclick method is used to associate an event with each button.  When the
         *  user clicks either button, the methods stated will be executed to handle that event.  For instance,
-        *  when the user clicks the 'Calculate Tax' button the calculateTax() code will 
+        *  when the user clicks the 'Calculate Tax' button the calculateTax() code will
         *  execute and when the user clicks the 'Clear Calculator' button, the clearButton() method will execute.
         *
         *  The onClick event will execute when a button is clicked.
@@ -76,7 +76,7 @@
          
          <!--************************************************************************************************
         *  This section in the HTML code defines id's or placeholders where the result of the calculations
-        *  and tax bracket will be place.  The getElementById() method used later in the program uses these id's 
+        *  and tax bracket will be place.  The getElementById() method used later in the program uses these id's
         *  to place the results of the calculations on the HTML page.
         *   
         *  The id's defined are:  taxEstimates and taxBracket.
@@ -94,7 +94,7 @@
           
           <br><br>
             
-            <center>To view an example of a tax bracket calculator, visit:  <a href="https://www.taxact.com/tools/tax-bracket-calculator.asp" target="_blank">https://www.taxact.com/tools/tax-bracket-calculator.asp</a></center>
+            <center>To view an example of a tax bracket calculator, visit:  <a href="https://www.taxact.com/tools/tax-bracket-calculator.asp" target="_blank" rel="noreferrer">https://www.taxact.com/tools/tax-bracket-calculator.asp</a></center>
 
         </fieldset>
       </form>
@@ -105,8 +105,8 @@
       function calculateTax(){
         /***********************************************************************************************  
         *   Purpose of the calculateTax method:  
-        *   This method is executed when the 'Calculate Tax' button is clicked.  This method 
-        *   gets the values the user enters into the textfield and dropdown menu using the 
+        *   This method is executed when the 'Calculate Tax' button is clicked.  This method
+        *   gets the values the user enters into the textfield and dropdown menu using the
         *   document.getElementById().value method, calculates the tax amount and tax rate (bracket)
         *   and displays the calculations in the HTML document using the getElementById() method.
         ***********************************************************************************************/
@@ -122,7 +122,8 @@
          //Calculate the tax amount and tax rate based on the filing status and income
          //0-Single, 1-Married Jointly, 2-Married Separately, and 3-Head of Household
 
-          if (status == 0) { 
+
+          if (status == 0) {
              // Compute tax for single filers
                if (income <= 9225){
                  tax = income * 0.10;
@@ -164,53 +165,157 @@
           else if(status == 1) {
                  /*******************************************************************************
                   * Task 1:  Compute the tax for users' who file as "Married Jointly".  Also,
-                  *          set (or initialize) the tax rate for each bracket.  Refer 
+                  *          set (or initialize) the tax rate for each bracket.  Refer
                   *          to the above example (single filer) and the assignment description
                   *          to write the correct equation for this filing status.
-                  * 
-                  * HINT:    If the "status" is equivalent to the value '1', the user is filing 
+                  *
+                  * HINT:    If the "status" is equivalent to the value '1', the user is filing
                   *          as "Married filing jointly or qualifying widow(er)".  
-                  * 
+                  *
                   *                       INSERT YOUR CODE BELOW!
                  *******************************************************************************/
              
              
-             
+             // Compute tax for Married filing jointly
+               if (income <= 9225) {
+                 tax = income * 0.10;
+                 taxRate = 10;
+               }//end of nested if
+               else if (income <= 37450) {
+                 tax = 9225 * 0.10 + (income - 9225) * 0.15;
+                 taxRate = 15;
+               }//end of else if
+               else if (income <= 90750) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 + (income - 37450) * 0.25;
+                 taxRate = 25;
+               } //end of else if
+               else if (income <= 189300) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (income - 90750) * 0.28;
+                 taxRate = 28;
+               }//end of else if
+               else if (income <= 411500) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                       (income - 189300) * 0.33;
+                 taxRate = 33;
+               }//end of else if
+               else if (income <= 413200) {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (income - 411500) * 0.35;
+                  taxRate = 35;
+               }//end of else if
+               else {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (413200 - 411500 ) * 0.35 + (income - 413200) * .396;
+                  taxRate = 39.6;
+               }//end of else
           }//end of married file jointly calculation
           
           else if(status == 2) {
                  /*******************************************************************************
                   * Task 2:  Compute the tax for users' who file as "Married Separately".  Also,
-                  *          set (or initialize) the tax rate for each bracket. Refer 
+                  *          set (or initialize) the tax rate for each bracket. Refer
                   *          to the above example (single filer) and the assignment description
                   *          to write the correct equation for this filing status.
-                  * 
-                  * HINT:    If the "status" is equivalent to the value '2', the user is filing 
+                  *
+                  * HINT:    If the "status" is equivalent to the value '2', the user is filing
                   *          as "Married filing separately."
-                  * 
+                  *
                   *                       INSERT YOUR CODE BELOW!
                  *******************************************************************************/
              
-             
-             
+
+             // Compute tax for Married filing separately
+               if (income <= 9225) {
+                 tax = income * 0.10;
+                 taxRate = 10;
+               }//end of nested if
+               else if (income <= 37450) {
+                 tax = 9225 * 0.10 + (income - 9225) * 0.15;
+                 taxRate = 15;
+               }//end of else if
+               else if (income <= 90750) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 + (income - 37450) * 0.25;
+                 taxRate = 25;
+               } //end of else if
+               else if (income <= 189300) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (income - 90750) * 0.28;
+                 taxRate = 28;
+               }//end of else if
+               else if (income <= 411500) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                       (income - 189300) * 0.33;
+                 taxRate = 33;
+               }//end of else if
+               else if (income <= 413200) {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (income - 411500) * 0.35;
+                  taxRate = 35;
+               }//end of else if
+               else {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (413200 - 411500 ) * 0.35 + (income - 413200) * .396;
+                  taxRate = 39.6;
+               }//end of else
           }//end of married file separately calculation
           
           else if(status == 3) {
                  /*******************************************************************************
                   * Task 3:  Compute the tax for users' who file as "Head of Household".  Also,
-                  *          set (or initialize) the tax rate for each bracket. Refer 
+                  *          set (or initialize) the tax rate for each bracket. Refer
                   *          to the above example (single filer) and the assignment description
                   *          to write the correct equation for this filing status.
-                  * 
-                  * HINT:    If the "status" is equivalent to the value '3', the user is filing 
+                  *
+                  * HINT:    If the "status" is equivalent to the value '3', the user is filing
                   *          as "Head of Household."
-                  * 
+                  *
                   *                       INSERT YOUR CODE BELOW!
                  *******************************************************************************/
              
              
-             
-             
+             // Compute tax for Head of Household
+               if (income <= 9225){
+                 tax = income * 0.10;
+                 taxRate = 10;
+               }//end of nested if
+               else if (income <= 37450) {
+                 tax = 9225 * 0.10 + (income - 9225) * 0.15;
+                 taxRate = 15;
+               }//end of else if
+               else if (income <= 90750) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 + (income - 37450) * 0.25;
+                 taxRate = 25;
+               } //end of else if
+               else if (income <= 189300) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (income - 90750) * 0.28;
+                 taxRate = 28;
+               }//end of else if
+               else if (income <= 411500) {
+                 tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                       (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                       (income - 189300) * 0.33;
+                 taxRate = 33;
+               }//end of else if
+               else if (income <= 413200) {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (income - 411500) * 0.35;
+                  taxRate = 35;
+               }//end of else if
+               else {
+                  tax = 9225 * 0.10 + (37450 - 9225) * 0.15 +
+                        (90750 - 37450) * 0.25 + (189300 - 90750) * 0.28 +
+                        (411500 - 189300) * 0.33 + (413200 - 411500 ) * 0.35 + (income - 413200) * .396;
+                  taxRate = 39.6;
+               }//end of else
           }//end of head of household calculation
           
           
@@ -218,11 +323,11 @@
            * Explanation of Code:
            *                This section of the code displays the result for the taxes calculated
            *                and the tax bracket the user falls in based on their income.
-           * 
+           *
            *                The document.getElementById() method is used to identify the place in
-           *                the HTML document the calculation result and the tax bracket will be 
-           *                placed.  It uses the specific ids (taxEstimate, taxBracket), which 
-           *                were defined above.  The toFixed() method is used to ensure a specified 
+           *                the HTML document the calculation result and the tax bracket will be
+           *                placed.  It uses the specific ids (taxEstimate, taxBracket), which
+           *                were defined above.  The toFixed() method is used to ensure a specified
            *                number of digits appear after the decimal place for the value.
            *
            *                The innerHTML property used with the document.getElementById() sets or
@@ -238,20 +343,20 @@
           
              /***********************************************************************************************  
               *   Purpose of the clearButton method:  
-              *   This method is executed when the 'Clear Calculator' button is clicked.  It removes the tax 
-              *   calculations and the values the user typed in the form.  It also resets the filing status 
+              *   This method is executed when the 'Clear Calculator' button is clicked.  It removes the tax
+              *   calculations and the values the user typed in the form.  It also resets the filing status
               *   back to 'Single' filing status.
               ***********************************************************************************************/             
 
          
               /*************************************************************************************************************
                * Task 4:  Add the additional code needed to remove the calculation results displayed in the HTML page.
-               *          Use the code below and the code from Lesson 4 Assignment for guidance on how to 
+               *          Use the code below and the code from Lesson 4 Assignment for guidance on how to
                *          complete this section.  
-               * 
+               *
                * Explanation of Code:  
                *          This section of the code removes the results from the HTML page when the 'Clear Calculator' button
-               *          is clicked.  The getElementById() method is used to find the element on the HTML page with 
+               *          is clicked.  The getElementById() method is used to find the element on the HTML page with
                *          the specified id and overwrite the existing values with the empty string or a set value.  
                *          This clears out the results.
 
@@ -262,10 +367,17 @@
               //This code resets the dropdown box to the "Single" filer status.
               document.getElementById("filingStatus").selectedIndex = 0;
               
+            //This code resets the dropdown box to the "Married filing jointly" filer status.
+              document.getElementById("filingStatus").selectedIndex = 1;
 
+            //This code resets the dropdown box to the "Married filing separately" filer status.
+              document.getElementById("filingStatus").selectedIndex = 2;
 
+            //This code resets the dropdown box to the "Head of Household" filer status.
+              document.getElementById("filingStatus").selectedIndex = 3;
+              
       }//end of clearButton function
-      
+          
    </script>
   </body>
 </html>
